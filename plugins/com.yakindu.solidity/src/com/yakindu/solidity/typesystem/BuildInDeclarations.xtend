@@ -30,7 +30,6 @@ import org.yakindu.base.types.typesystem.AbstractTypeSystem
 import org.yakindu.base.types.typesystem.ITypeSystem
 
 import static com.yakindu.solidity.typesystem.SolidityTypeSystem.*
-import static org.yakindu.base.types.typesystem.ITypeSystem.*
 
 /**
  * @author andreas muelder - Initial contribution and API
@@ -40,130 +39,226 @@ import static org.yakindu.base.types.typesystem.ITypeSystem.*
 @Accessors(PUBLIC_GETTER)
 class BuildInDeclarations {
 
-	ITypeSystem typeSystem
-	TypesFactory typesFactory
+	protected ITypeSystem typeSystem
+	protected TypesFactory typesFactory
+	protected SolidityFactory solidityFactory
+	protected boolean installed
+	protected Operation assert_
+	protected Operation require
+	protected Operation revert
+	protected Operation addmod
+	protected Operation mulmod
+	protected Operation keccak256
+	protected Operation sha3
+	protected Operation sha256
+	protected Operation ripemd160
+	protected Operation ecrecover
+	protected Operation suicide
+	protected Operation selfdestruct
+	protected Property msg
+	protected Property this_
+	protected Property super_
+	protected Property now
+	protected Property tx
+	protected Property block
+	protected Property length
+	protected Operation push
+	protected ContractDefinition owned
+	protected ContractDefinition mortal
 
-	boolean installed
-	Operation assert_
-	Operation require
-	Operation revert
-	Operation addmod
-	Operation mulmod
-	Operation keccak256
-	Operation sha3
-	Operation sha256
-	Operation ripemd160
-	Operation ecrecover
-	Operation suicide
-	Operation selfdestruct
-	Property msg
-	Property this_
-	Property super_
-	Property now
-	Property tx
-	Property block
-	Property length
-	Operation push
-	ContractDefinition owned
-	ContractDefinition mortal
+	protected Type ADDRESS
+	protected Type ANY
+	protected Type BOOL
+	protected Type BYTES20
+	protected Type BYTES32
+	protected Type INT
+	protected Type UINT
+	protected Type UINT8
+	protected Type VOID
 
 	def create new ArrayList<EObject>() superContracts() {
 		addAll(#[owned, mortal])
 	}
 
+	def all() {
+		#[msg, assert_, require, revert, addmod, mulmod, keccak256, sha3, sha256, length, push, ripemd160, ecrecover,
+			block, suicide, selfdestruct, this_, super_, now, tx, owned, mortal]
+	}
+
 	@Inject
 	new(ITypeSystem typeSystem, TypesFactory typesFactory, SolidityFactory solidityFactory) {
+		this.typeSystem = typeSystem
+		this.typesFactory = typesFactory
+		this.solidityFactory = solidityFactory
+		ADDRESS = SolidityTypeSystem.ADDRESS.typeForName
+		ANY = SolidityTypeSystem.ANY.typeForName
+		BOOL = SolidityTypeSystem.BOOL.typeForName
+		BYTES20 = SolidityTypeSystem.BYTES20.typeForName
+		BYTES32 = SolidityTypeSystem.BYTES32.typeForName
+		INT = SolidityTypeSystem.INT.typeForName
+		UINT = SolidityTypeSystem.UINT.typeForName
+		UINT8 = SolidityTypeSystem.UINT8.typeForName
+		VOID = SolidityTypeSystem.VOID.typeForName
+		initialize
+	}
+
+	def protected initialize() {
 		/************************
 		 *     ERROR HANDLING 
 		 ************************/
-		this.typeSystem = typeSystem
-		this.typesFactory = typesFactory
-
-		val ADDRESS = ADDRESS.typeForName
-		val ANY = ANY.typeForName
-		val BOOL = BOOL.typeForName
-		val BYTES20 = BYTES20.typeForName
-		val BYTES32 = BYTES32.typeForName
-		val INT = INT.typeForName
-		val UINT = UINT.typeForName
-		val UINT8 = UINT8.typeForName
-		val VOID = VOID.typeForName
-
-		assert_ = createOperation("assert", VOID) => [
-			parameters += createParameter("condition", BOOL)
-		]
-
-		require = createOperation("require", VOID) => [
-			parameters += createParameter("condition", BOOL)
-		]
-
-		revert = createOperation("revert", VOID)
+		assert_ = assert_()
+		require = require()
+		revert = revert()
 
 		/************************
 		 *     MATH and CRYPTO
 		 ************************/
-		addmod = createOperation("addmod", UINT) => [
+		addmod = addmod()
+		mulmod = mulmod()
+		keccak256 = keccak256()
+		sha256 = sha256()
+		sha3 = sha3()
+		ripemd160 = ripemd160()
+		ecrecover = ecrecover()
+
+		/************************
+		 * CONSTANTS & GLOBALS
+		 ************************/
+		now = now()
+		this_ = this_()
+		super_ = super_()
+		msg = msg()
+		tx = tx()
+		block = block()
+		length = length()
+		push = push()
+
+		/************************
+		 *     DESTRUCTION
+		 ************************/
+		suicide = suicide()
+		selfdestruct = selfdestruct()
+
+		/************************
+		 *     SUPERCONTRACTS
+		 ************************/
+		owned = owned()
+		mortal = mortal()
+	}
+
+	def protected Operation assert_() {
+		createOperation("assert", VOID) => [
+			parameters += createParameter("condition", BOOL)
+		]
+	}
+
+	def protected Operation require() {
+		createOperation("require", VOID) => [
+			parameters += createParameter("condition", BOOL)
+		]
+	}
+
+	def protected Operation revert() {
+		createOperation("revert", VOID)
+	}
+
+	def protected Operation addmod() {
+		createOperation("addmod", UINT) => [
 			parameters += createParameter("x", UINT)
 			parameters += createParameter("y", UINT)
 			parameters += createParameter("k", UINT)
 		]
+	}
 
-		mulmod = createOperation("mulmod", UINT) => [
+	def protected Operation mulmod() {
+		createOperation("mulmod", UINT) => [
 			parameters += createParameter("x", UINT)
 			parameters += createParameter("y", UINT)
 			parameters += createParameter("k", UINT)
 		]
+	}
 
-		keccak256 = createOperation("keccak256", BYTES32) => [
+	def protected Operation keccak256() {
+		createOperation("keccak256", BYTES32) => [
 			parameters += createParameter("argument", ANY) => [varArgs = true]
 		]
+	}
 
-		sha256 = createOperation("sha256", BYTES32) => [
+	def protected Operation sha3() {
+		createOperation("sha3", BYTES32) => [
 			parameters += createParameter("argument", ANY) => [varArgs = true]
 		]
+	}
 
-		sha3 = createOperation("sha3", BYTES32) => [
+	def protected Operation sha256() {
+		createOperation("sha256", BYTES32) => [
 			parameters += createParameter("argument", ANY) => [varArgs = true]
 		]
+	}
 
-		ripemd160 = createOperation("ripemd160", BYTES20) => [
+	def protected Operation ripemd160() {
+		createOperation("ripemd160", BYTES20) => [
 			parameters += createParameter("argument", ANY) => [varArgs = true]
 		]
+	}
 
-		ecrecover = createOperation("ecrecover", ADDRESS) => [
+	def protected Operation ecrecover() {
+		createOperation("ecrecover", ADDRESS) => [
 			parameters += createParameter("hash", BYTES32)
 			parameters += createParameter("v", UINT8)
 			parameters += createParameter("r", BYTES32)
 			parameters += createParameter("s", BYTES32)
 		]
+	}
 
-		now = createConstant("now", UINT)
-
-		this_ = createConstant("this", ADDRESS)
-
-		super_ = createConstant("super", ANY)
-
-		suicide = createOperation("suicide", VOID) => [
+	def protected Operation suicide() {
+		createOperation("suicide", VOID) => [
 			parameters += createParameter("address", ADDRESS)
 		]
+	}
 
-		selfdestruct = createOperation("selfdestruct", VOID) => [
+	def protected Operation selfdestruct() {
+		createOperation("selfdestruct", VOID) => [
 			parameters += createParameter("address", ADDRESS)
 		]
+	}
 
-		msg = createConstant("msg", MESSAGE.typeForName)
-
-		tx = createConstant("tx", TRANSACTION.typeForName)
-
-		block = createConstant("block", BLOCK.typeForName)
-
-		length = createProperty("length", INT)
-
-		push = createOperation("push", INT) => [
+	def protected Operation push() {
+		createOperation("push", INT) => [
 			parameters += createParameter("element", ANY)
 		]
+	}
 
-		owned = solidityFactory.createContractDefinition() => [
+	def protected Property now() {
+		createConstant("now", UINT)
+	}
+
+	def protected Property this_() {
+		createConstant("this", ADDRESS)
+	}
+
+	def protected Property super_() {
+		createConstant("super", ANY)
+	}
+
+	def protected Property msg() {
+		createConstant("msg", MESSAGE.typeForName)
+	}
+
+	def protected Property tx() {
+		createConstant("tx", TRANSACTION.typeForName)
+	}
+
+	def protected Property block() {
+		createConstant("block", BLOCK.typeForName)
+	}
+
+	def protected Property length() {
+		createProperty("length", INT)
+	}
+
+	def protected owned() {
+		solidityFactory.createContractDefinition() => [
 			(typeSystem as AbstractTypeSystem).resource.contents += it
 			name = "owned"
 			features += solidityFactory.createVariableDefinition() => [
@@ -183,8 +278,10 @@ class BuildInDeclarations {
 			]
 
 		]
+	}
 
-		mortal = solidityFactory.createContractDefinition() => [
+	def protected mortal() {
+		solidityFactory.createContractDefinition() => [
 			(typeSystem as AbstractTypeSystem).resource.contents += it
 			name = "mortal"
 			superTypes += owned
@@ -200,11 +297,6 @@ class BuildInDeclarations {
 				]
 			]
 		]
-	}
-
-	def all() {
-		#[msg, assert_, require, revert, addmod, mulmod, keccak256, sha3, sha256, length, push, ripemd160, ecrecover,
-			block, suicide, selfdestruct, this_, super_, now, tx, owned, mortal]
 	}
 
 	def protected Type getTypeForName(String typeName) {
@@ -250,4 +342,5 @@ class BuildInDeclarations {
 			it.readonly = readonly
 		]
 	}
+
 }
