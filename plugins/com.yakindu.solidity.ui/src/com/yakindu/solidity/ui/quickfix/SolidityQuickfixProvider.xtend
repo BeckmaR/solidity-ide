@@ -31,6 +31,7 @@ import com.yakindu.solidity.solidity.ThrowStatement
 import com.yakindu.solidity.solidity.TypeSpecifier
 import com.yakindu.solidity.solidity.VariableDefinition
 import com.yakindu.solidity.typesystem.SolidityTypeSystem
+import com.yakindu.solidity.typesystem.builtin.BuiltInDeclarationsFactory
 import javax.inject.Named
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.ui.editor.model.edit.IModificationContext
@@ -48,7 +49,6 @@ import org.yakindu.base.types.Operation
 import static com.yakindu.solidity.validation.IssueCodes.*
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
-import com.yakindu.solidity.typesystem.BuiltInDeclarationsFactory
 
 /** 
  * @author andreas muelder - Initial contribution and API
