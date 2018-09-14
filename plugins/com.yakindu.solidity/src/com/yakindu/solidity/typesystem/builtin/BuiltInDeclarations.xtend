@@ -103,7 +103,7 @@ class BuiltInDeclarations {
 		initialize
 	}
 
-	def protected initialize() {
+	def protected void initialize() {
 		/************************
 		 *     ERROR HANDLING 
 		 ************************/

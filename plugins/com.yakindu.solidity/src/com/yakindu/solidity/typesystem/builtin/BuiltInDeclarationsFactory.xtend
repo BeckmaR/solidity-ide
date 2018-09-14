@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.EcoreUtil2
 import org.yakindu.base.types.Operation
+import org.yakindu.base.types.Property
 import org.yakindu.base.types.TypesFactory
 import org.yakindu.base.types.typesystem.ITypeSystem
 
@@ -61,17 +62,28 @@ class BuiltInDeclarationsFactory implements IBuiltInDeclarationsFactory{
 		switch (version) {
 			case ZERO_FIVE_ZERO: {
 				return new BuiltInDeclarations(typeSystem,typesFactory,solidityFactory) {
-							
-							override protected Operation keccak256() {
-								createOperation("keccak256", BYTES32) => [
-									parameters += createParameter("argument", SolidityTypeSystem.BYTES.typeForName) => [
-										optional=false
-										varArgs = false
-									]
-								]
-							}
-							
-						} 
+				
+					Property abi
+					
+					override protected initialize() {
+						super.initialize()
+						abi = createConstant("abi", SolidityTypeSystem.ABI.typeForName);
+					}
+
+					override all() {
+						#[msg, assert_, require, revert, abi, addmod, mulmod, keccak256, sha3, sha256, length, push, ripemd160,
+							ecrecover, block, suicide, selfdestruct, this_, super_, now, tx, owned, mortal]
+					}
+
+					override protected Operation keccak256() {
+						createOperation("keccak256", BYTES32) => [
+							parameters += createParameter("argument", SolidityTypeSystem.BYTES.typeForName) => [
+								optional = false
+								varArgs = false
+							]
+						]
+					}				
+				}
 			}
 			default :{
 				return new BuiltInDeclarations(typeSystem,typesFactory,solidityFactory) 
