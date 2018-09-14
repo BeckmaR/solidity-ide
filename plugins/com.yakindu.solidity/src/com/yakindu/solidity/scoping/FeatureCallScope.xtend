@@ -21,6 +21,7 @@ import com.yakindu.solidity.solidity.Identifier
 import com.yakindu.solidity.solidity.MappingTypeSpecifier
 import com.yakindu.solidity.solidity.VariableDefinition
 import com.yakindu.solidity.typesystem.SolidityTypeSystem
+import com.yakindu.solidity.typesystem.builtin.BuiltInDeclarations
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
@@ -37,7 +38,6 @@ import org.yakindu.base.types.TypeSpecifier
 import org.yakindu.base.types.TypedElement
 import org.yakindu.base.types.inferrer.ITypeSystemInferrer
 import org.yakindu.base.types.typesystem.ITypeSystem
-import com.yakindu.solidity.typesystem.BuiltInDeclarations
 
 /**
  * 

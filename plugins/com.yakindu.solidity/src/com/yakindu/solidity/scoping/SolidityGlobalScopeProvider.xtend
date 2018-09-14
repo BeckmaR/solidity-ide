@@ -16,6 +16,7 @@ package com.yakindu.solidity.scoping
 
 import com.google.common.base.Predicate
 import com.yakindu.solidity.solidity.ImportDirective
+import com.yakindu.solidity.typesystem.builtin.BuiltInDeclarationsFactory
 import java.util.LinkedHashSet
 import java.util.Set
 import javax.inject.Inject
@@ -29,7 +30,6 @@ import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.ImportUriGlobalScopeProvider
 import org.eclipse.xtext.util.IResourceScopeCache
 import org.yakindu.base.types.typesystem.ITypeSystem
-import com.yakindu.solidity.typesystem.BuiltInDeclarationsFactory
 
 /**
  * 

@@ -12,12 +12,13 @@
  * 	committers of YAKINDU 
  * 
  */
-package com.yakindu.solidity.typesystem
+package com.yakindu.solidity.typesystem.builtin
 
 import com.google.inject.Inject
 import com.yakindu.solidity.solidity.ContractDefinition
 import com.yakindu.solidity.solidity.FunctionModifier
 import com.yakindu.solidity.solidity.SolidityFactory
+import com.yakindu.solidity.typesystem.SolidityTypeSystem
 import java.util.ArrayList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors

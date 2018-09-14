@@ -26,6 +26,8 @@ import com.yakindu.solidity.solidity.SolidityPackage
 import com.yakindu.solidity.terminals.SolidityValueConverterService
 import com.yakindu.solidity.typesystem.SolidityTypeInferrer
 import com.yakindu.solidity.typesystem.SolidityTypeSystem
+import com.yakindu.solidity.typesystem.builtin.BuiltInDeclarationsFactory
+import com.yakindu.solidity.typesystem.builtin.IBuiltInDeclarationsFactory
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy
 import org.eclipse.xtext.scoping.IScopeProvider
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
@@ -34,7 +36,6 @@ import org.yakindu.base.types.TypesFactory
 import org.yakindu.base.types.TypesPackage
 import org.yakindu.base.types.inferrer.ITypeSystemInferrer
 import org.yakindu.base.types.typesystem.ITypeSystem
-import com.yakindu.solidity.typesystem.BuiltInDeclarationsFactory
 
 /**
  * 
@@ -55,10 +56,9 @@ class SolidityRuntimeModule extends AbstractSolidityRuntimeModule {
 		binder.bind(SolidityFactory).toInstance(SolidityFactory.eINSTANCE)
 		binder.bind(TypesPackage).toInstance(TypesPackage.eINSTANCE)
 		binder.bind(TypesFactory).toInstance(TypesFactory.eINSTANCE)
-		binder.bind(BuiltInDeclarationsFactory)
+		binder.bind(IBuiltInDeclarationsFactory).to(BuiltInDeclarationsFactory)
 		binder.bind(String).annotatedWith(Names.named(SOLIDITY_VERSION)).toInstance(
 			BuiltInDeclarationsFactory.DEFAULT_SOLIDITY_VERSION)
-
 	}
 
 	override bindIGlobalScopeProvider() {
