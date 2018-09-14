@@ -20,7 +20,6 @@ import com.yakindu.solidity.solidity.FunctionDefinition
 import com.yakindu.solidity.solidity.Identifier
 import com.yakindu.solidity.solidity.MappingTypeSpecifier
 import com.yakindu.solidity.solidity.VariableDefinition
-import com.yakindu.solidity.typesystem.BuildInDeclarations
 import com.yakindu.solidity.typesystem.SolidityTypeSystem
 import java.util.List
 import org.eclipse.emf.ecore.EObject
@@ -38,6 +37,7 @@ import org.yakindu.base.types.TypeSpecifier
 import org.yakindu.base.types.TypedElement
 import org.yakindu.base.types.inferrer.ITypeSystemInferrer
 import org.yakindu.base.types.typesystem.ITypeSystem
+import com.yakindu.solidity.typesystem.BuiltInDeclarations
 
 /**
  * 
@@ -49,11 +49,11 @@ class FeatureCallScope extends AbstractScope {
 
 	var FeatureCall context
 	var EReference ref
-	var BuildInDeclarations declarations
+	var BuiltInDeclarations declarations
 	var ITypeSystem typeSystem
 	var ITypeSystemInferrer inferrer
 
-	protected new(FeatureCall context, EReference ref, BuildInDeclarations declarations, ITypeSystem typeSystem,
+	protected new(FeatureCall context, EReference ref, BuiltInDeclarations declarations, ITypeSystem typeSystem,
 		ITypeSystemInferrer inferrer) {
 		super(IScope.NULLSCOPE, false)
 		this.context = context

@@ -31,7 +31,7 @@ import com.yakindu.solidity.solidity.SourceUnit;
  * @author Florian Antony - Initial contribution and API
  */
 @Singleton
-public class BuildInDeclarationsFactory {
+public class BuiltInDeclarationsFactory {
 
 	public static final String DEFAULT_SOLIDITY_VERSION = "^0.4.23";
 	public static final String ZERO_FIVE_ZERO = "^0.5.0";
@@ -43,11 +43,11 @@ public class BuildInDeclarationsFactory {
 	@Inject
 	private SolidityFactory solidityFactory;
 
-	public BuildInDeclarations create(EObject element) {
+	public BuiltInDeclarations create(EObject element) {
 		return getBuiltInDeclarationsFor(calculatePragma(element));
 	}
 
-	public BuildInDeclarations create(Resource resource) {
+	public BuiltInDeclarations create(Resource resource) {
 		return getBuiltInDeclarationsFor(calculatePragma(resource));
 	}
 
@@ -68,10 +68,10 @@ public class BuildInDeclarationsFactory {
 		return DEFAULT_SOLIDITY_VERSION;
 	}
 
-	private BuildInDeclarations getBuiltInDeclarationsFor(String version) {
+	private BuiltInDeclarations getBuiltInDeclarationsFor(String version) {
 		switch (version) {
 		case ZERO_FIVE_ZERO:
-			return new BuildInDeclarations(typeSystem, typesFactory, solidityFactory) {
+			return new BuiltInDeclarations(typeSystem, typesFactory, solidityFactory) {
 
 				// TODO implement changes
 				@Override
@@ -81,7 +81,7 @@ public class BuildInDeclarationsFactory {
 				}
 			};
 		default:
-			return new BuildInDeclarations(typeSystem, typesFactory, solidityFactory);
+			return new BuiltInDeclarations(typeSystem, typesFactory, solidityFactory);
 		}
 	}
 }

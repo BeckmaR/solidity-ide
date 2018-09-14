@@ -37,7 +37,7 @@ import static com.yakindu.solidity.typesystem.SolidityTypeSystem.*
  * @author Karsten Thoms
  */
 @Accessors(PUBLIC_GETTER)
-class BuildInDeclarations {
+class BuiltInDeclarations {
 
 	protected ITypeSystem typeSystem
 	protected TypesFactory typesFactory

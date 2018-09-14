@@ -30,7 +30,6 @@ import com.yakindu.solidity.solidity.StorageLocation
 import com.yakindu.solidity.solidity.ThrowStatement
 import com.yakindu.solidity.solidity.TypeSpecifier
 import com.yakindu.solidity.solidity.VariableDefinition
-import com.yakindu.solidity.typesystem.BuildInDeclarationsFactory
 import com.yakindu.solidity.typesystem.SolidityTypeSystem
 import javax.inject.Named
 import org.eclipse.emf.ecore.EObject
@@ -49,6 +48,7 @@ import org.yakindu.base.types.Operation
 import static com.yakindu.solidity.validation.IssueCodes.*
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
+import com.yakindu.solidity.typesystem.BuiltInDeclarationsFactory
 
 /** 
  * @author andreas muelder - Initial contribution and API
@@ -57,7 +57,7 @@ import static extension org.eclipse.xtext.EcoreUtil2.*
  */
 class SolidityQuickfixProvider extends ExpressionsQuickfixProvider {
 
-	@Inject BuildInDeclarationsFactory builtInDeclarationsFactory
+	@Inject BuiltInDeclarationsFactory builtInDeclarationsFactory
 	@Inject extension SolidityFactory
 	@Inject @Named(SolidityRuntimeModule.SOLIDITY_VERSION) String solcVersion
 
