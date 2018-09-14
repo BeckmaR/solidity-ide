@@ -53,7 +53,7 @@ public class BuildInDeclarationsFactory {
 
 	private String calculatePragma(Resource resource) {
 		PragmaDirective pragma = (PragmaDirective) EcoreUtil2.eAllContentsAsList(resource).stream()
-				.filter(eObject -> eObject instanceof PragmaDirective).findFirst().get();
+				.filter(eObject -> eObject instanceof PragmaDirective).findFirst().orElseGet(() -> null);
 		if (pragma != null) {
 			return pragma.getVersion();
 		}
@@ -61,7 +61,7 @@ public class BuildInDeclarationsFactory {
 	}
 
 	private String calculatePragma(EObject element) {
-		PragmaDirective pragma = ((PragmaDirective) EcoreUtil2.getContainerOfType(element, SourceUnit.class));
+		PragmaDirective pragma = ((PragmaDirective) EcoreUtil2.getContainerOfType(element, SourceUnit.class).getPragma());
 		if (pragma != null) {
 			return pragma.getVersion();
 		}
@@ -84,5 +84,4 @@ public class BuildInDeclarationsFactory {
 			return new BuildInDeclarations(typeSystem, typesFactory, solidityFactory);
 		}
 	}
-
 }
